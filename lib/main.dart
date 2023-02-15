@@ -7,23 +7,30 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({key});
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData.light(
-        useMaterial3: true,
-      ),
+      theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.red,
+          colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.blue, backgroundColor: Colors.white)),
       home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({key});
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,11 +41,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final canContinue = currentStep < 2;
+    final canContinue = currentStep < 4;
     final canCancel = currentStep > 0;
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        backgroundColor: Colors.blue,
+        // backgroundColor: Colors.black,
         middle: Text('CI/CD Demo'),
       ),
       child: Center(
@@ -51,7 +58,7 @@ class _HomePageState extends State<HomePage> {
               type: StepperType.vertical,
               currentStep: currentStep,
               steps: [
-            for (var i = 0; i < 2; i++)
+            for (var i = 0; i < 4; i++)
               _buildStep(
                 index: i,
                 title: Text('Step ${i + 1}'),
@@ -96,9 +103,11 @@ Step _buildStep({
     content: LimitedBox(
       maxWidth: 300,
       maxHeight: 300,
-      child: Container(
-        color: Colors.blueGrey,
-        child: Icon(Icons.headphones),
+      child: ClipOval(
+        child: Container(
+          color: Colors.blue,
+          child: Icon(Icons.done, color: Colors.white, size: 100),
+        ),
       ),
     ),
   );
@@ -110,15 +119,18 @@ Step _buildStepError({
   bool isActive = false,
 }) {
   return Step(
-    label: Text("CICD"),
+    label: const Text("CICD"),
     title: title,
-    subtitle: Text("Building Apk and ipa File"),
+    subtitle: const Text("Linking & Passing Build into Fastlane"),
     state: state,
     isActive: isActive,
     content: LimitedBox(
       maxWidth: 300,
       maxHeight: 300,
-      child: Container(color: Colors.blueGrey),
+      child: Container(
+        color: Colors.white,
+        child: const Icon(Icons.warning, color: Colors.red, size: 100),
+      ),
     ),
   );
 }
@@ -130,13 +142,18 @@ Step _buildStepDisabled({
 }) {
   return Step(
     title: title,
-    subtitle: Text("Last Steps"),
+    subtitle: const Text("Last Steps"),
     state: state,
     isActive: isActive,
     content: LimitedBox(
       maxWidth: 300,
       maxHeight: 300,
-      child: Container(color: Colors.blueGrey),
+      child: ClipOval(
+        child: Container(
+          color: Colors.blue,
+          child: const Icon(Icons.warning, color: Colors.red, size: 100),
+        ),
+      ),
     ),
   );
 }

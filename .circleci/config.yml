@@ -8,10 +8,23 @@ jobs:
       - run: flutter doctor
       - run: pwd
       - run: flutter devices
-      # - run: flutter build apk --release
+
+      # - Building Apk
       - run:
           name: Build APK
           command: flutter build apk --release
+
+      # Building Ipa's
+      - run:
+          name: Build IPA
+          command: flutter build ios --release
+
+      # Storing Apk -->
       - store_artifacts:
           path: build/app/outputs/apk/release/app-release.apk
           destination: app-release.apk
+
+          # Storing ipa -->
+      - store_artifacts:
+          path: build/ios/iphoneos/*.ipa
+          destination: app-release.ipa
