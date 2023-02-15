@@ -8,4 +8,10 @@ jobs:
       - run: flutter doctor
       - run: pwd
       - run: flutter devices
-      - run: flutter build apk --release
+      # - run: flutter build apk --release
+      - run:
+          name: Build APK
+          command: flutter build apk --release
+      - store_artifacts:
+          path: build/app/outputs/apk/release/app-release.apk
+          destination: app-release.apk
