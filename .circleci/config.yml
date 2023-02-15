@@ -7,4 +7,5 @@ jobs:
       - checkout
       - run: flutter doctor
       - run: pwd
+      - run: flutter devices
       - run: flutter build apk --release
